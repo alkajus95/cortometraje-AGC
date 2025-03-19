@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mensaje Desconocido</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #333;
+            color: #fff;
+        }
+        .chat-container {
+            width: 90%;
+            height: 5%;
+            border: 1px solid #666;
+            padding: 20px;
+            overflow-y: auto;
+            background-color: #444;
+        }
+        .chat-message .message-text {
+            padding: 10px;
+            border-bottom: 1px solid #666;
+            display: inline-block;
+            width: fit-content;
+        }
+        .chat-message {
+            margin-bottom: 10px;
+        }
+        .chat-message .message-text {
+            padding: 10px;
+            border-bottom: 1px solid #666;
+        }
+        .chat-message .message-text:last-child {
+            border-bottom: none;
+        }
+        .chat-input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #666;
+            background-color: #555;
+            color: #fff;
+        }
+        .chat-message.me {
+            text-align: right;
+        }
+        .chat-message.me .message-text {
+            background-color: #666;
+        }
+        .chat-message.me .message-time {
+            font-size: 12px;
+            color: #999;
+            margin-top: 5px;
+        }
+        .chat-message.other {
+            text-align: left;
+        }
+        .chat-message.other .message-text {
+            background-color: #555;
+        }
+        .chat-message.other .message-time {
+            font-size: 12px;
+            color: #999;
+            margin-top: 5px;
+        }
+        .chat-message.other .message-number {
+            font-size: 12px;
+            color: #999;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div id="chat-log"></div>
+        <input type="text" id="chat-input" class="chat-input" placeholder="Escribe un mensaje...">
+    </div>
+
+    <script>
+        const chatLog = document.getElementById('chat-log');
+        const chatInput = document.getElementById('chat-input');
+
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                const userMessage = chatInput.value.trim();
+                if (userMessage) {
+                    const messageElement = document.createElement('div');
+                    messageElement.classList.add('chat-message', 'me');
+                    messageElement.innerHTML = `
+                        <div class="message-text">${userMessage}</div>
+                        <div class="message-time">${new Date().toLocaleTimeString()}</div>
+                    `;
+                    chatLog.appendChild(messageElement);
+
+                    const response = getResponse(userMessage);
+                    const responseElement = document.createElement('div');
+                    responseElement.classList.add('chat-message', 'other');
+                    responseElement.innerHTML = `
+                        <div class="message-number">+56 9 8765 4321</div>
+                        <div class="message-text">${response}</div>
+                        <div class="message-time">${new Date().toLocaleTimeString()}</div>
+                    `;
+                    chatLog.appendChild(responseElement);
+
+                    chatInput.value = '';
+                    chatLog.scrollTop = chatLog.scrollHeight;
+                }
+            }
+        });
+
+        function getResponse(message) {
+    if (message.toLowerCase().includes('bien')) {
+        return 'lo mas de bien, pero mi telefono se daño y ya no resiste ni el 3G ni el 4G';
+    } else if (message.toLowerCase().includes('parece')) {
+        return 'que es eso de telegrafo?';
+    } else if (message.toLowerCase().includes('primeros')) {
+        return 'mira tú eso, que interesante';
+    } else if (message.toLowerCase().includes('cibercriminal')) {
+        return 'a mi me han hackeado ya varias veces mani, pero no sabia que se les llamaba asi';
+    } else if (message.toLowerCase().includes('amigo')) {
+        return 'si, yo soy tu amigo';
+    } else if (message.toLowerCase().includes('hacktivista')) {
+        return 'no tengo ni idea llave';
+    } else if (message.toLowerCase().includes('hacker')) {
+        return 'igual ya qué, ya tengo tu direccion IP';}
+     else {
+        return 'estas protegido por todos lados';
+    }
+}
+
+        const initialMessage = '¿Qué más, firme?';
+        const initialMessageElement = document.createElement('div');
+        initialMessageElement.classList.add('chat-message', 'other');
+        initialMessageElement.innerHTML = `
+            <div class="message-number">+57 317 333 7282</div>
+            <div class="message-text">${initialMessage}</div>
+            <div class="message-time">${new Date().toLocaleTimeString()}</div>
+        `;
+        chatLog.appendChild(initialMessageElement);
+    </script>
+</body>
+</html>
